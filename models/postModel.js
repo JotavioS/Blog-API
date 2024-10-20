@@ -16,6 +16,20 @@ const getAllPosts = () => {
   }
 };
 
+// Função para adicionar um novo post
+const addNewPost = (newPost) => {
+  try {
+    const posts = getAllPosts();
+    posts.push(newPost);
+    fs.writeFileSync(filePath, JSON.stringify(posts, null, 2), 'utf8');
+    return { success: true };
+  } catch (err) {
+    console.error('Erro ao salvar post:', err);
+    return { success: false };
+  }
+};
+
 module.exports = {
-  getAllPosts
+  getAllPosts,
+  addNewPost
 };
