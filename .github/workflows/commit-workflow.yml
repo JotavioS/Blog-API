@@ -1,0 +1,30 @@
+name: Commit Workflow
+
+# Acionado em cada push (commit) na branch especificada
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Clonar o repositório
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Passo 2: Instalar o Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '21'
+
+      # Passo 3: Instalar as dependências
+      - name: Install dependencies
+        run: npm install
+
+      # Passo 4: Executar testes
+      - name: Run tests
+        run: npm test
