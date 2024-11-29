@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const app = require('../server');
 
 beforeAll(async () => {
-  // Conectar ao banco de dados de teste
-  await mongoose.connect(process.env.MONGO_TEST_URI || 'mongodb://localhost:27017/blog-teste');
+  if (!mongoose.connection.readyState) {
+    // Apenas conecta se ainda não estiver conectado
+    await mongoose.connect(process.env.MONGO_TEST_URI || 'mongodb://localhost:27017/blog-teste');
+  }
 });
 
 afterAll(async () => {
