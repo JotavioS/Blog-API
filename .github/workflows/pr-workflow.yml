@@ -24,7 +24,9 @@ jobs:
     steps:
       # Passo 1: Clonar o repositório
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # Passo 2: Instalar o Node.js
       - name: Set up Node.js
@@ -45,14 +47,9 @@ jobs:
         env:
           MONGO_TEST_URI: ${{ secrets.MONGO_TEST_URI }}
         run: npm test
-          
-  sonarcloud:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@v4
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      
+      # SonarCloud
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
